@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="description" content="IUBAT Campus Services — Student Service Request System, styled after Shahjalal University of Science and Technology (SUST) — sust.edu" />
+    <title>@ViewData["Title"] - IUBAT Campus Services | IUBAT</title>
+    <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <!-- Top Bar — SUST style: bg-dark-top inc-border (navy #082c66 + red 3px) -->
+    <div class="top-bar-area bg-dark-top inc-border text-light">
+        <div class="container">
+            <div class="info-top-left">
+                <div class="top-bar-text">
+                    <i class="fa-solid fa-location-dot"></i>
+                    IUBAT — Uttara, Dhaka-1230
+                </div>
+                <ul class="top-social">
+                    <li><a href="https://www.facebook.com/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                    <li><a href="https://www.youtube.com/" target="_blank" aria-label="Youtube"><i class="fab fa-youtube" style="color:#ff3b30"></i></a></li>
+                    <li><a href="#" aria-label="X"><i class="fab fa-x-twitter"></i></a></li>
+                </ul>
+            </div>
+            <div class="top-link-right">
+                <ul>
+                    <li>
+                        <a asp-controller="Home" asp-action="Index"><i class="fas fa-house"></i> Home</a>
+                    </li>
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        @if (User.IsInRole("Student"))
+                        {
+                            <li><a asp-controller="Student" asp-action="Create"><i class="fas fa-file-circle-plus"></i> Submit Request</a></li>
+                            <li><a asp-controller="Student" asp-action="MyRequests"><i class="fas fa-list-check"></i> My Requests</a></li>
+                        }
+                        @if (User.IsInRole("Staff"))
+                        {
+                            <li><a asp-controller="Staff" asp-action="AllRequests"><i class="fas fa-table-list"></i> All Requests</a></li>
+                        }
+                    }
+                    else
+                    {
+                        <li><a asp-controller="Account" asp-action="Login"><i class="fas fa-key"></i> Student Login</a></li>
+                        <li><a asp-controller="Account" asp-action="Login"><i class="fas fa-user-shield"></i> Staff Login</a></li>
+                        <li><a asp-controller="Account" asp-action="Register" class="top-link-highlight"><i class="fas fa-user-plus"></i> Online Services</a></li>
+                    }
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-custom">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                    <span class="brand-icon"><i class="fas fa-graduation-cap"></i></span>
+                    <span class="brand-text">
+                        <span class="brand-title">IUBAT</span>
+                        <span class="brand-subtitle">Campus Services &nbsp;|&nbsp; Since 1991</span>
+                    </span>
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#mainNav" aria-controls="mainNav"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="mainNav">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            @if (User.IsInRole("Student"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Student" asp-action="Create">Submit Request</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Student" asp-action="MyRequests">My Requests</a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Staff"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link" asp-controller="Staff" asp-action="AllRequests">All Requests</a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Home" asp-action="Privacy">About</a>
+                            </li>
+                        }
+                    </ul>
+                    <ul class="navbar-nav ms-lg-3">
+                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <span class="nav-link" style="cursor:default; text-transform:none; letter-spacing:0.2px;">
+                                    <i class="fas fa-user-circle" style="color:var(--sust-red); margin-right:4px;"></i>
+                                    @User.Identity.Name
+                                    @if (User.IsInRole("Staff"))
+                                    {
+                                        <span class="badge-staff">Staff</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge-student">Student</span>
+                                    }
+                                </span>
+                            </li>
+                            <li class="nav-item">
+                                <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
+                                    <button type="submit" class="nav-link btn btn-link" style="color: var(--du-navy); font-weight:700; text-transform:uppercase; font-size:12px; letter-spacing:0.5px;"><i class="fas fa-right-from-bracket" style="margin-right:4px;"></i> Logout</button>
+                                </form>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Account" asp-action="Login"><i class="fas fa-right-to-bracket" style="margin-right:4px; color:var(--sust-red)"></i> Login</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="Account" asp-action="Register" style="background:var(--sust-red); color:#ffffff !important; border-radius:2px; padding:8px 16px !important; margin-left:8px; font-weight:700;"><i class="fas fa-user-plus" style="margin-right:4px;"></i> Register</a>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container">
+        @RenderBody()
+    </main>
+
+    <footer class="footer-custom">
+        <div class="footer-main">
+            <div class="container">
+                <div class="row g-4">
+                    <!-- About / Brand -->
+                    <div class="col-lg-4 col-md-6">
+                        <h4 class="footer-title">IUBAT Campus Services</h4>
+                        <p style="color:rgba(255,255,255,0.78); line-height:24px; font-size:13.5px; font-family:'Open Sans',sans-serif; margin-bottom:12px;">
+                            International University of Business Agriculture and Technology — <br />
+                            Student Service Request System. Submit, track and resolve your ID card, transcript and certificate requests online.
+                        </p>
+                        <p style="color:rgba(255,255,255,0.72); font-size:12.5px; font-family:'Open Sans',sans-serif; margin-bottom:14px;">
+                            <span style="color:#fff; background:var(--sust-red); padding:2px 6px; border-radius:2px; font-weight:700;">Est. 1991</span> &nbsp;|&nbsp; Uttara Model Town, Dhaka-1230
+                        </p>
+                        <div class="footer-social">
+                            <a href="https://www.facebook.com/duadministration" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.youtube.com/" target="_blank" aria-label="Youtube"><i class="fab fa-youtube"></i></a>
+                            <a href="#" aria-label="X Twitter"><i class="fab fa-x-twitter"></i></a>
+                            <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Useful Links -->
+                    <div class="col-lg-2 col-md-6">
+                        <h4 class="footer-title">Useful Links</h4>
+                        <ul class="footer-links">
+                            <li><a asp-controller="Home" asp-action="Index"><i class="fas fa-angle-right"></i> Home</a></li>
+                            <li><a asp-controller="Student" asp-action="Create"><i class="fas fa-angle-right"></i> Submit Request</a></li>
+                            <li><a asp-controller="Student" asp-action="MyRequests"><i class="fas fa-angle-right"></i> My Requests</a></li>
+                            <li><a asp-controller="Staff" asp-action="AllRequests"><i class="fas fa-angle-right"></i> Staff Panel</a></li>
+                            <li><a asp-controller="Home" asp-action="Privacy"><i class="fas fa-angle-right"></i> Privacy Policy</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Services -->
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="footer-title">Service Types</h4>
+                        <ul class="footer-links">
+                            <li><a href="#"><i class="fas fa-angle-right"></i> ID Card Replacement</a></li>
+                            <li><a href="#"><i class="fas fa-angle-right"></i> Transcript Request</a></li>
+                            <li><a href="#"><i class="fas fa-angle-right"></i> Certificate Request</a></li>
+                            <li><a href="#"><i class="fas fa-angle-right"></i> Clearance & Verification</a></li>
+                            <li><a href="#"><i class="fas fa-angle-right"></i> Online Services</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Contact -->
+                    <div class="col-lg-3 col-md-6">
+                        <h4 class="footer-title">Contact Us</h4>
+                        <div class="footer-contact">
+                            <p><i class="fas fa-location-dot"></i> <span>4 Embankment Drive Road, Off Dhaka-Ashulia Road, Sector-10, Uttara Model Town, Dhaka-1230, Bangladesh</span></p>
+                            <p><i class="fas fa-phone"></i> <span>Phone: +88-02-55091871</span></p>
+                            <p><i class="fas fa-fax"></i> <span>Fax: 880-2-58950975</span></p>
+                            <p><i class="fas fa-envelope"></i> <a href="mailto:info@iubat.edu">info@iubat.edu</a></p>
+                            <p style="margin-top:10px;"><a href="#" style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border:1px solid rgba(255,255,255,0.18); border-radius:2px; color:#fff; font-weight:600; font-size:12px;"><i class="fas fa-file-lines" style="color:var(--sust-red)"></i> Forms &amp; Downloads</a> &nbsp;<a href="#" style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:var(--sust-red); border-radius:2px; color:#ffffff; font-weight:700; font-size:12px;">ePayment</a></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <p>&copy; 2026 IUBAT — International University of Business Agriculture and Technology. All Rights Reserved. Design inspired by <a href="https://www.sust.edu" target="_blank">Shahjalal University of Science and Technology (SUST)</a>.</p>
+                <ul class="footer-bottom-links">
+                    <li><a asp-controller="Account" asp-action="Login">Portal Login</a></li>
+                    <li><a href="#">ICT Cell</a></li>
+                    <li><a asp-controller="Home" asp-action="Privacy">Privacy</a></li>
+                </ul>
+            </div>
+        </div>
+        <a class="btn btn-danger" id="back2Top" title="Back to top" href="#"><i class="fas fa-arrow-up"></i></a>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Back to top — as SUST
+        (function(){
+            var btn = document.getElementById('back2Top');
+            if(!btn) return;
+            window.addEventListener('scroll', function(){
+                if(window.scrollY > 300) btn.style.display='inline-flex';
+                else btn.style.display='none';
+                btn.style.alignItems='center'; btn.style.justifyContent='center';
+            });
+            btn.addEventListener('click', function(e){
+                e.preventDefault(); window.scrollTo({top:0, behavior:'smooth'});
+            });
+        })();
+        // Active nav highlighting
+        (function(){
+            var path = window.location.pathname.toLowerCase();
+            document.querySelectorAll('.navbar-custom .nav-link').forEach(function(a){
+                var href = a.getAttribute('href');
+                if(!href || href==='#') return;
+                try{
+                    var u = new URL(href, window.location.origin);
+                    if(u.pathname.toLowerCase() === path) a.classList.add('active');
+                    else if(path.startsWith(u.pathname.toLowerCase()) && u.pathname !== '/') a.classList.add('active');
+                }catch(e){}
+            });
+        })();
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>
