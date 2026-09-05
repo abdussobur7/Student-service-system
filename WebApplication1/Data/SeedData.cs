@@ -21,7 +21,9 @@ namespace WebApplication1.Data
             }
 
             string staffEmail = "suborna@iubat.edu";
-            if (await userManager.FindByEmailAsync(staffEmail) == null)
+            const string staffPassword = "Muna1234D";
+            var existingStaff = await userManager.FindByEmailAsync(staffEmail);
+            if (existingStaff == null)
             {
                 var staffUser = new ApplicationUser
                 {
@@ -32,10 +34,28 @@ namespace WebApplication1.Data
                     EmailConfirmed = true
                 };
 
-                var result = await userManager.CreateAsync(staffUser, "P@ssW0rd");
+                var result = await userManager.CreateAsync(staffUser, staffPassword);
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(staffUser, "Staff");
+                }
+            }
+            else
+            {
+                // Ensure role and password are current (idempotent update for existing DB)
+                if (!await userManager.IsInRoleAsync(existingStaff, "Staff"))
+                    await userManager.AddToRoleAsync(existingStaff, "Staff");
+                if (!await userManager.CheckPasswordAsync(existingStaff, staffPassword))
+                {
+                    var token = await userManager.GeneratePasswordResetTokenAsync(existingStaff);
+                    await userManager.ResetPasswordAsync(existingStaff, token, staffPassword);
+                }
+                // Keep profile names current
+                if (existingStaff.FirstName != "Suborna" || existingStaff.LastName != "IUBAT")
+                {
+                    existingStaff.FirstName = "Suborna";
+                    existingStaff.LastName = "IUBAT";
+                    await userManager.UpdateAsync(existingStaff);
                 }
             }
         }
