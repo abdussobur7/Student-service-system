@@ -4,18 +4,19 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="description" content="IUBAT Campus Services — Student Service Request System, styled after Shahjalal University of Science and Technology (SUST) — sust.edu" />
-    <title>@ViewData["Title"] - IUBAT Campus Services | IUBAT</title>
+    <meta name="description" content="IUBAT Campus Services — Student Service Request System, styled after Shanto-Mariam University of Creative Technology (SMUCT) — smuct.ac.bd" />
+    <title>@ViewData["Title"] - IUBAT Campus Services | SMUCT Inspired</title>
     <link rel="shortcut icon" href="~/favicon.ico" type="image/x-icon" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@400;500;600;700&family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://smuct.ac.bd/wp-content/plugins/bangla-web-fonts/solaiman-lipi/font.css" rel="stylesheet">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
-    <!-- Top Bar — SUST style: bg-dark-top inc-border (navy #082c66 + red 3px) -->
+    <!-- Top Bar — SMUCT style: gradient #0E043A, 33px min-height, white text, flat -->
     <div class="top-bar-area bg-dark-top inc-border text-light">
         <div class="container">
             <div class="info-top-left">
@@ -25,7 +26,7 @@
                 </div>
                 <ul class="top-social">
                     <li><a href="https://www.facebook.com/" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a></li>
-                    <li><a href="https://www.youtube.com/" target="_blank" aria-label="Youtube"><i class="fab fa-youtube" style="color:#ff3b30"></i></a></li>
+                    <li><a href="https://www.youtube.com/" target="_blank" aria-label="Youtube"><i class="fab fa-youtube"></i></a></li>
                     <li><a href="#" aria-label="X"><i class="fab fa-x-twitter"></i></a></li>
                 </ul>
             </div>
@@ -38,8 +39,8 @@
                     {
                         @if (User.IsInRole("Student"))
                         {
-                            <li><a asp-controller="Student" asp-action="Create"><i class="fas fa-file-circle-plus"></i> Submit Request</a></li>
-                            <li><a asp-controller="Student" asp-action="MyRequests"><i class="fas fa-list-check"></i> My Requests</a></li>
+                            <li><a asp-controller="Student" asp-action="Create"><i class="fas fa-laptop" style="margin-right:4px;"></i> Online Admission</a></li>
+                            <li><a asp-controller="Student" asp-action="MyRequests"><i class="fas fa-user-graduate" style="margin-right:4px;"></i> Student (i-EMS)</a></li>
                         }
                         @if (User.IsInRole("Staff"))
                         {
@@ -48,8 +49,8 @@
                     }
                     else
                     {
-                        <li><a asp-controller="Account" asp-action="Login"><i class="fas fa-key"></i> Student Login</a></li>
-                        <li><a asp-controller="Account" asp-action="Login"><i class="fas fa-user-shield"></i> Staff Login</a></li>
+                        <li><a href="https://admission.smuct.ac.bd/" target="_blank"><i class="fas fa-laptop"></i> Online Admission</a></li>
+                        <li><a asp-controller="Account" asp-action="Login"><i class="fas fa-user-graduate"></i> Student (i-EMS)</a></li>
                         <li><a asp-controller="Account" asp-action="Register" class="top-link-highlight"><i class="fas fa-user-plus"></i> Online Services</a></li>
                     }
                 </ul>
@@ -64,7 +65,7 @@
                     <span class="brand-icon"><i class="fas fa-graduation-cap"></i></span>
                     <span class="brand-text">
                         <span class="brand-title">IUBAT</span>
-                        <span class="brand-subtitle">Campus Services &nbsp;|&nbsp; Since 1991</span>
+                        <span class="brand-subtitle">Campus Services &nbsp;|&nbsp; Creative Destination</span>
                     </span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -106,8 +107,8 @@
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
                         {
                             <li class="nav-item">
-                                <span class="nav-link" style="cursor:default; text-transform:none; letter-spacing:0.2px;">
-                                    <i class="fas fa-user-circle" style="color:var(--sust-red); margin-right:4px;"></i>
+                                <span class="nav-link" style="cursor:default; text-transform:none; letter-spacing:0.2px; font-family:'Poppins',sans-serif;">
+                                    <i class="fas fa-user-circle" style="color:var(--smuct-navy); margin-right:4px;"></i>
                                     @User.Identity.Name
                                     @if (User.IsInRole("Staff"))
                                     {
@@ -121,17 +122,17 @@
                             </li>
                             <li class="nav-item">
                                 <form asp-controller="Account" asp-action="Logout" method="post" class="d-inline">
-                                    <button type="submit" class="nav-link btn btn-link" style="color: var(--du-navy); font-weight:700; text-transform:uppercase; font-size:12px; letter-spacing:0.5px;"><i class="fas fa-right-from-bracket" style="margin-right:4px;"></i> Logout</button>
+                                    <button type="submit" class="nav-link btn btn-link" style="color: var(--smuct-navy); font-weight:500; text-transform:capitalize; font-size:14px; letter-spacing:0.3px; font-family:'Raleway',sans-serif;"><i class="fas fa-right-from-bracket" style="margin-right:4px;"></i> Logout</button>
                                 </form>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Account" asp-action="Login"><i class="fas fa-right-to-bracket" style="margin-right:4px; color:var(--sust-red)"></i> Login</a>
+                                <a class="nav-link" asp-controller="Account" asp-action="Login"><i class="fas fa-right-to-bracket" style="margin-right:4px; color:var(--smuct-navy)"></i> Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" asp-controller="Account" asp-action="Register" style="background:var(--sust-red); color:#ffffff !important; border-radius:2px; padding:8px 16px !important; margin-left:8px; font-weight:700;"><i class="fas fa-user-plus" style="margin-right:4px;"></i> Register</a>
+                                <a class="nav-link" asp-controller="Account" asp-action="Register" style="background:var(--smuct-navy); color:#ffffff !important; border-radius:3px; padding:6px 14px !important; margin-left:8px; font-weight:500; border:1px solid var(--smuct-navy); font-family:'Poppins',sans-serif;"><i class="fas fa-user-plus" style="margin-right:4px;"></i> Register</a>
                             </li>
                         }
                     </ul>
@@ -139,6 +140,18 @@
             </div>
         </nav>
     </header>
+    <!-- Floating Social Bar — SMUCT right-fixed -->
+    <div class="social-bar">
+        <a href="https://m.me/shantomariamuniversity" target="_blank" class="social-btn messenger" aria-label="Messenger">
+            <i class="fab fa-facebook-messenger"></i>
+        </a>
+        <a href="https://www.facebook.com/shantomariamuniversity/" target="_blank" class="social-btn facebook" aria-label="Facebook">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://wa.me/+09638177177" target="_blank" class="social-btn whatsapp" aria-label="WhatsApp">
+            <i class="fas fa-phone"></i>
+        </a>
+    </div>
 
     <main class="container">
         @RenderBody()
@@ -151,15 +164,15 @@
                     <!-- About / Brand -->
                     <div class="col-lg-4 col-md-6">
                         <h4 class="footer-title">IUBAT Campus Services</h4>
-                        <p style="color:rgba(255,255,255,0.78); line-height:24px; font-size:13.5px; font-family:'Open Sans',sans-serif; margin-bottom:12px;">
+                        <p style="color:#7A7A7A; line-height:28px; font-size:13px; font-family:'Poppins',sans-serif; margin-bottom:10px;">
                             International University of Business Agriculture and Technology — <br />
                             Student Service Request System. Submit, track and resolve your ID card, transcript and certificate requests online.
                         </p>
-                        <p style="color:rgba(255,255,255,0.72); font-size:12.5px; font-family:'Open Sans',sans-serif; margin-bottom:14px;">
-                            <span style="color:#fff; background:var(--sust-red); padding:2px 6px; border-radius:2px; font-weight:700;">Est. 1991</span> &nbsp;|&nbsp; Uttara Model Town, Dhaka-1230
+                        <p style="color:#7A7A7A; font-size:12.5px; font-family:'Poppins',sans-serif; margin-bottom:14px;">
+                            <span style="color:#fff; background:var(--smuct-navy); padding:2px 6px; border-radius:3px; font-weight:600;">Est. 1991</span> &nbsp;|&nbsp; Uttara Model Town, Dhaka-1230
                         </p>
                         <div class="footer-social">
-                            <a href="https://www.facebook.com/duadministration" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                            <a href="https://www.facebook.com/iubatofficial" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
                             <a href="https://www.youtube.com/" target="_blank" aria-label="Youtube"><i class="fab fa-youtube"></i></a>
                             <a href="#" aria-label="X Twitter"><i class="fab fa-x-twitter"></i></a>
                             <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
@@ -198,7 +211,7 @@
                             <p><i class="fas fa-phone"></i> <span>Phone: +88-02-55091871</span></p>
                             <p><i class="fas fa-fax"></i> <span>Fax: 880-2-58950975</span></p>
                             <p><i class="fas fa-envelope"></i> <a href="mailto:info@iubat.edu">info@iubat.edu</a></p>
-                            <p style="margin-top:10px;"><a href="#" style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border:1px solid rgba(255,255,255,0.18); border-radius:2px; color:#fff; font-weight:600; font-size:12px;"><i class="fas fa-file-lines" style="color:var(--sust-red)"></i> Forms &amp; Downloads</a> &nbsp;<a href="#" style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:var(--sust-red); border-radius:2px; color:#ffffff; font-weight:700; font-size:12px;">ePayment</a></p>
+                            <p style="margin-top:10px;"><a href="#" style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border:1px solid #1D2327; border-radius:3px; color:#1D2327; font-weight:400; font-size:12px; font-family:'Poppins',sans-serif;"><i class="fas fa-file-lines" style="color:var(--smuct-navy)"></i> Forms &amp; Downloads</a> &nbsp;<a href="#" style="display:inline-flex; align-items:center; gap:6px; padding:6px 12px; background:var(--smuct-navy); border:1px solid var(--smuct-navy); border-radius:3px; color:#ffffff; font-weight:500; font-size:12px; font-family:'Poppins',sans-serif;">ePayment</a></p>
                         </div>
                     </div>
                 </div>
@@ -207,7 +220,7 @@
 
         <div class="footer-bottom">
             <div class="container d-flex flex-wrap justify-content-between align-items-center gap-2">
-                <p>&copy; 2026 IUBAT — International University of Business Agriculture and Technology. All Rights Reserved. Design inspired by <a href="https://www.sust.edu" target="_blank">Shahjalal University of Science and Technology (SUST)</a>.</p>
+                <p>&copy; 2026 IUBAT — International University of Business Agriculture and Technology. All Rights Reserved. Design inspired by <a href="https://smuct.ac.bd" target="_blank">Shanto-Mariam University of Creative Technology (SMUCT)</a>.</p>
                 <ul class="footer-bottom-links">
                     <li><a asp-controller="Account" asp-action="Login">Portal Login</a></li>
                     <li><a href="#">ICT Cell</a></li>
@@ -215,7 +228,7 @@
                 </ul>
             </div>
         </div>
-        <a class="btn btn-danger" id="back2Top" title="Back to top" href="#"><i class="fas fa-arrow-up"></i></a>
+        <a class="btn" id="back2Top" title="Back to top" href="#"><i class="fas fa-arrow-up"></i></a>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
