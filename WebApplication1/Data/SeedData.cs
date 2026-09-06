@@ -38,6 +38,11 @@ namespace WebApplication1.Data
                 if (result.Succeeded)
                 {
                     await userManager.AddToRoleAsync(staffUser, "Staff");
+                    Console.WriteLine($"[Seed] Staff user created: {staffEmail}");
+                }
+                else
+                {
+                    Console.WriteLine($"[Seed] Failed to create staff {staffEmail}: {string.Join(", ", result.Errors.Select(e => e.Description))}");
                 }
             }
             else
@@ -48,7 +53,11 @@ namespace WebApplication1.Data
                 if (!await userManager.CheckPasswordAsync(existingStaff, staffPassword))
                 {
                     var token = await userManager.GeneratePasswordResetTokenAsync(existingStaff);
-                    await userManager.ResetPasswordAsync(existingStaff, token, staffPassword);
+                    var reset = await userManager.ResetPasswordAsync(existingStaff, token, staffPassword);
+                    if (reset.Succeeded)
+                        Console.WriteLine($"[Seed] Staff password reset for {staffEmail}");
+                    else
+                        Console.WriteLine($"[Seed] Password reset failed for {staffEmail}: {string.Join(", ", reset.Errors.Select(e => e.Description))}");
                 }
                 // Keep profile names current
                 if (existingStaff.FirstName != "Suborna" || existingStaff.LastName != "IUBAT")
